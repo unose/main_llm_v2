@@ -41,8 +41,8 @@ docker version
 Now that Docker is installed, from the `main_llm_v2` directory:
 
 ```bash
-docker build -t main_llm_v2 .
-docker run --rm -p 8000:8000 main_llm_v2
+sudo docker build -t main_llm_v2 .
+sudo docker run --rm -p 8000:8000 main_llm_v2
 ```
 
 In a separate terminal, you can then hit your API:
