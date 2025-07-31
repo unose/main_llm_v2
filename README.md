@@ -48,22 +48,21 @@ sudo docker run --rm -p 8000:8000 main_llm_v2
 Create a repository on Docker Hub (e.g. myoungkyu/main-llm-v2).
 
 Log in locally:
-docker login --username myoungkyu
+```docker login --username myoungkyu```
 
-sudo usermod -aG docker $USER
+`sudo usermod -aG docker $USER`
 
-# This re‐evaluates your groups without logging out
-exec newgrp docker
+### This re‐evaluates your groups without logging out
+`exec newgrp docker`
 
-# Tag the image for Docker Hub:
-docker tag main_llm_v2 myoungkyu/main-llm-v2:latest
+### Tag the image for Docker Hub:
+`docker tag main_llm_v2 myoungkyu/main-llm-v2:latest`
 
-# Push the image (ubuntu on gcloud):
-docker push myoungkyu/main-llm-v2:latest
+### Push the image (ubuntu on gcloud):
+`docker push myoungkyu/main-llm-v2:latest`
 
-# Pull or deploy from anywhere:
-docker pull myoungkyu/main-llm-v2:latest
-
+### Pull or deploy from anywhere:
+`docker pull myoungkyu/main-llm-v2:latest`
 
 Docker Hub’s free tier allows public repositories; private repos require a paid plan.
 
@@ -96,7 +95,7 @@ Docker doesn’t write a tarball into your current directory—instead it stores
 
 ---
 
-# HOW TO WORK WITH MAIN_LLM_V2 DOCKER IMAGE
+## HOW TO WORK WITH MAIN_LLM_V2 DOCKER IMAGE
 
 A containerized UniXcoder-based intelligent code API, deployable via Docker. This version is portable and can be run anywhere Docker is available.
 
@@ -175,11 +174,11 @@ You should receive output similar to:
 
 ---
 
-**Docker image hosted on GitHub Container Registry (GHCR)**
+## **Docker image hosted on GitHub Container Registry (GHCR)**
 
 ---
 
-## ✅ Pull and Run a GHCR Image
+## Pull and Run a GHCR Image
 
 ### 1. **Authenticate (if private)**
 
