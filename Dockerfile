@@ -28,6 +28,12 @@ COPY reload.sh           ./
 COPY git-proc.sh         ./
 COPY README.md           ./
 
+# Ensure correct file ownership
+RUN chown -R appuser:appuser /app
+
+# Switch to non-root user
+USER appuser
+
 # Expose the Flask port
 EXPOSE 8000
 
