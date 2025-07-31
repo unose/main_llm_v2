@@ -96,32 +96,57 @@ Docker doesn’t write a tarball into your current directory—instead it stores
 
 ---
 
-## How to work with the image
+# HOW TO WORK WITH MAIN_LLM_V2 DOCKER IMAGE
 
-Once pulled, you can see it in Docker’s local registry:
+A containerized UniXcoder-based intelligent code API, deployable via Docker. This version is portable and can be run anywhere Docker is available.
+
+## Overview
+
+- REST API for masked intelligent code
+- Based on Flask + Gunicorn + HuggingFace Transformers
+- CPU-only version (optimized for lightweight deployment)
+- Dockerized for platform-independent usage
+
+## Quick Start with Docker
+
+### 1. Clone the repository
 
 ```bash
-docker images
+git clone https://github.com/unose/main_llm_v2.git
+cd main_llm_v2
+````
+
+### 2. Install Docker (Ubuntu example)
+
+```bash
+sudo apt update
+sudo apt install -y docker.io
 ```
 
-You can then:
+### 3. Enable Docker for your user
 
-* **Run a container**:
+```bash
+sudo usermod -aG docker $USER
+exec newgrp docker
+```
 
-  ```bash
-  docker run --rm -p 8000:8000 myoungkyu/main-llm-v2:latest
-  ```
-* **Save it to a tar file** (if you need a standalone archive):
+### 4. Pull the Docker image
 
-  ```bash
-  docker save myoungkyu/main-llm-v2:latest -o main-llm-v2.tar
-  ```
+```bash
+docker pull myoungkyu/main-llm-v2:latest
+```
 
-  This writes a `.tar` in your current directory which you can transport or inspect.
+### 5. Run the container
 
----
+```bash
+docker run --rm -p 8000:8000 myoungkyu/main-llm-v2:latest
+```
 
-In a separate terminal, you can then hit your API:
+The API will now be accessible at `http://localhost:8000`.
+
+## Test the API
+
+In a separate terminal, run the following:
 
 ```bash
 curl -X POST http://localhost:8000/api/codecomplete \
@@ -135,3 +160,16 @@ curl -X POST http://localhost:8000/api/codecomplete \
 }
 EOF
 ```
+
+You should receive output similar to:
+
+```json
+{"completions":["toJson","fromJson","serialize","write",""]}
+```
+
+## Image Information
+
+* Docker Hub: [myoungkyu/main-llm-v2](https://hub.docker.com/r/myoungkyu/main-llm-v2)
+* Exposed port: `8000`
+* Entry point: `gunicorn api.index:app`
+
