@@ -173,3 +173,61 @@ You should receive output similar to:
 * Exposed port: `8000`
 * Entry point: `gunicorn api.index:app`
 
+---
+
+**Docker image hosted on GitHub Container Registry (GHCR)**
+
+---
+
+## ✅ Pull and Run a GHCR Image
+
+### 1. **Authenticate (if private)**
+
+If the image is private, login with a [GitHub personal access token (PAT)](https://github.com/settings/tokens):
+
+```bash
+echo $CR_PAT | docker login ghcr.io -u unose --password-stdin
+```
+
+> Replace `$CR_PAT` with a token that has at least `read:packages` scope.
+
+If the image is **public**, you can skip authentication.
+
+---
+
+### 2. **Pull the image**
+
+```bash
+docker pull ghcr.io/unose/main-llm-v2:latest
+```
+
+---
+
+### 3. **Run the container**
+
+```bash
+docker run --rm -p 8000:8000 ghcr.io/unose/main-llm-v2:latest
+```
+
+> This will start the API on port `8000`, same as with your Docker Hub version.
+
+---
+
+### 4. **Test the API**
+
+In a separate terminal:
+
+```bash
+curl -X POST http://localhost:8000/api/codecomplete \
+  -H "Content-Type: application/json" \
+  --data-binary @- <<'EOF'
+{
+  "function": "public static void writeJson(Object data, String filePath) throws IOException {\n    Gson gson = new GsonBuilder()\n                   .setPrettyPrinting()\n                   .create();\n    try (Writer writer = new FileWriter(filePath)) {\n        gson.<mask0>(data, writer);\n    }\n}",
+  "beam_size": 5,
+  "max_length": 64,
+  "mask_token": "<mask0>"
+}
+EOF
+```
+
+---
