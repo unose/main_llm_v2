@@ -45,6 +45,38 @@ sudo docker build -t main_llm_v2 .
 sudo docker run --rm -p 8000:8000 main_llm_v2
 ```
 
+Create a repository on Docker Hub (e.g. myoungkyu/main-llm-v2).
+
+Log in locally:
+docker login --username myoungkyu
+
+sudo usermod -aG docker $USER
+
+# This re‐evaluates your groups without logging out
+exec newgrp docker
+
+# Tag the image for Docker Hub:
+docker tag main_llm_v2 myoungkyu/main-llm-v2:latest
+
+# Push the image:
+docker push myoungkyu/main-llm-v2:latest
+
+# Pull or deploy from anywhere:
+docker pull myoungkyu/main-llm-v2:latest
+
+Docker Hub’s free tier allows public repositories; private repos require a paid plan.
+
+
+
+
+
+
+
+
+
+
+
+
 In a separate terminal, you can then hit your API:
 
 ```bash
