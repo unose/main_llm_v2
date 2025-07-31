@@ -58,24 +58,68 @@ exec newgrp docker
 # Tag the image for Docker Hub:
 docker tag main_llm_v2 myoungkyu/main-llm-v2:latest
 
-# Push the image:
+# Push the image (ubuntu on gcloud):
 docker push myoungkyu/main-llm-v2:latest
 
 # Pull or deploy from anywhere:
 docker pull myoungkyu/main-llm-v2:latest
 
+
 Docker Hub’s free tier allows public repositories; private repos require a paid plan.
 
+You run on local (mac):
 
+```bash
+docker pull myoungkyu/main-llm-v2:latest
+```
 
+Docker doesn’t write a tarball into your current directory—instead it stores the layers and metadata inside its own storage area.
 
+---
 
+## Where pulled images live
 
+* **On Linux (Docker Engine):**
+  By default all images, containers, volumes and build cache live under
 
+  ```
+  /var/lib/docker
+  ```
 
+  Inside there you’ll find subdirectories for each storage driver (e.g. `overlay2`) that hold the unpacked layers and metadata.
 
+* **On macOS (Docker Desktop):**
+  Docker Desktop runs a lightweight Linux VM under the hood. All images live inside that VM’s filesystem (in its internal `/var/lib/docker`), not directly on your macOS host filesystem.
 
+* **On Windows (Docker Desktop):**
+  Same story: images reside in the VM’s virtual disk.
 
+---
+
+## How to work with the image
+
+Once pulled, you can see it in Docker’s local registry:
+
+```bash
+docker images
+```
+
+You can then:
+
+* **Run a container**:
+
+  ```bash
+  docker run --rm -p 8000:8000 myoungkyu/main-llm-v2:latest
+  ```
+* **Save it to a tar file** (if you need a standalone archive):
+
+  ```bash
+  docker save myoungkyu/main-llm-v2:latest -o main-llm-v2.tar
+  ```
+
+  This writes a `.tar` in your current directory which you can transport or inspect.
+
+---
 
 In a separate terminal, you can then hit your API:
 
